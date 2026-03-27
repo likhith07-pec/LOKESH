@@ -271,25 +271,39 @@ statNums.forEach(el => countObserver.observe(el));
 /* ============================================================
    10. CONTACT FORM
 ============================================================ */
+/* ============================================================
+   10. CONTACT FORM (EMAILJS INTEGRATED)
+============================================================ */
 const form        = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
 if (form) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
+
     const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.innerHTML = '<span>Sending...</span>';
 
-    setTimeout(() => {
-      btn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>';
-      btn.disabled  = false;
-      if (formSuccess) {
-        formSuccess.classList.add('visible');
-        form.reset();
-        setTimeout(() => formSuccess.classList.remove('visible'), 4000);
-      }
-    }, 1200);
+    emailjs.send("service_3p0kuzx", "template_kx8wmj2", {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    })
+    .then(function() {
+        btn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>';
+        btn.disabled  = false;
+
+        if (formSuccess) {
+          formSuccess.classList.add('visible');
+          form.reset();
+          setTimeout(() => formSuccess.classList.remove('visible'), 4000);
+        }
+    }, function(error) {
+        console.log(error);
+        btn.innerHTML = '<span>Failed ❌</span>';
+        btn.disabled = false;
+    });
   });
 }
 
