@@ -144,7 +144,7 @@ function initCanvas() {
 ============================================================ */
 const typedEl = document.getElementById('typedText');
 const phrases = [
-  'Electrical Infrastructure Specialist',
+  'Infra Electrical Engineer',
   'Data Center Operations Expert',
   'HSQE Safety Professional',
   'Preventive Maintenance Lead'
